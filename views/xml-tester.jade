@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  h1 #[span(class="code") xml2js] and #[span(class="code") express-xml-bodyparser] tester
+  h2 Send an XML message
+  p Action: POST
+  p Content-Type: #[input(id="contentType", value="text/xml") ]
+  p Body: 
+  p
+    textarea(id="xmlRequest", cols="100", rows="5")= sampleXmlRequest 
+  button(class="submitButton", id='sendBtn') Send request
+
+  h2 Result 
+  p HTTP status: #[input(id="responseStatus", readonly)]
+  p HTTP response body: 
+  p 
+    textarea(id="responseOutput", cols="100", rows="5", readonly)
+
+
+  script.
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      var xml = document.getElementById('xmlRequest').value;
+      var contentType = document.getElementById('contentType').value;
+
+      var responseStatus = document.getElementById('responseStatus');
+      var responseOutput = document.getElementById('responseOutput');
+
+      fetch('/xmltester', {
+        method: 'POST',
+        headers: {
+          'Content-Type': contentType
+        },
+        body: xml
+      })
+      .then(response => {
+        responseStatus.value = response.status;
+        return response.text();
+      })
+      .then(responseText => responseOutput.value = responseText)
+      .catch(error => responseOutput.value = `Error sending fetch request: ${error}`);
+    });
+

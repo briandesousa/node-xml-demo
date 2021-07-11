@@ -6,3 +6,21 @@ body {
 a {
   color: #00B7FF;
 }
+
+h2 {
+  margin-top: 1.2em;
+}
+
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #EFEFEF;
+}
+
+.margin-bottom {
+ margin-bottom: 1.2em; 
+}
+
+.submitButton {
+  padding: 10px;
+  font-size: 1.2em;
+}

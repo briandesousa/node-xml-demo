@@ -3,8 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var xmlparser = require('express-xml-bodyparser');
 
 var indexRouter = require('./routes/index');
+var xmlTesterRouter = require('./routes/xml-tester');
+var examplesRouter = require('./routes/examples');
 
 var app = express();
 
@@ -17,8 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(xmlparser({
+  normalizeTags: false
+}));
 
 app.use('/', indexRouter);
+app.use('/xmltester', xmlTesterRouter);
+app.use('/examples', examplesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
