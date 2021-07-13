@@ -6,7 +6,10 @@ var logger = require('morgan');
 var xmlparser = require('express-xml-bodyparser');
 
 var indexRouter = require('./routes/index');
-var xmlTesterRouter = require('./routes/xml-tester');
+var xml2jsRouter = require('./routes/xml2js');
+var libxmljs2Router = require('./routes/libxmljs2');
+var cheerioRouter = require('./routes/cheerio');
+var svgsonRouter = require('./routes/svgson');
 
 var app = express();
 
@@ -24,7 +27,10 @@ app.use(xmlparser({
 }));
 
 app.use('/', indexRouter);
-app.use('/xmltester', xmlTesterRouter);
+app.use('/xml2js', xml2jsRouter);
+app.use('/libxmljs2', libxmljs2Router);
+app.use('/cheerio', cheerioRouter);
+app.use('/svgson', svgsonRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

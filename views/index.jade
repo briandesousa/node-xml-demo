@@ -1,39 +1,20 @@
 extends layout
 
 block content
-  h1 Reading and Writing XML in Node.js
   p Demonstrating reading and writing XML in a Node.js application using popular NPM packages.
 
-  h2 #[span(class="code") xml2js] and #[span(class="code") express-xml-bodyparser]
-  p Send an HTTP POST request with an XML body to an endpoint on the Express server that accepts XML using 
-    #[span(class="code") express-xml-bodyparser], which uses #[span(class="code") xmljs] under the covers.
-  div(class="margin-bottom")
-    button(id="sendXmlButton") Send XML Request
-  div
-    p Response:
-    textarea(id="xmlResponseOutput", cols="100", rows="2", readonly)
-
-  script.
-    document.getElementById('sendXmlButton').addEventListener('click', () => {
-      var responseOutput = document.getElementById('xmlResponseOutput');
-
-      fetch('/examples/customer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/xml'
-        },
-        body: '<retrieveCustomer><id>39399444</id></retrieveCustomer>'
-      })
-      .then(response => response.text())
-      .then(responseText => responseOutput.value = responseText)
-      .catch(error => responseOutput.value = `Error sending fetch request: ${error}`);
-    });
-
-  h2 #[span(class='code') libxmljs2]
-  p 
-
-  h2 #[span(class='code') cheerio]
-  p 
+  h3
+    a(href="/xml2js") Receiving XML over HTTP with 
+      #[span(class="code") xml2js] and #[span(class="code") express-xml-bodyparser]
   
-  h2 #[span(class='code') svgson]
-  p 
+  h3
+    a(href="/libxmljs2") Validating XML with schemas with 
+      #[span(class="code") libxmlj2]
+
+  h3
+    a(href="/cheerio") Manipulating HTML content with 
+      #[span(class="code") cheerio]
+
+  h3
+    a(href="/svgson") Generating SVG images with 
+      #[span(class="code") svgson]
