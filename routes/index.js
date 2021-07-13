@@ -3,7 +3,21 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Reading and Writing XML in Node.js' });
+  res.render('index', {});
+});
+
+module.exports = router;
+
+// retrieve customer info using an XML request and response
+router.post('/customer', function(req, res, next) {
+  console.log('Raw XML: ' + req.rawBody);
+  console.log('Parsed XML: ' + JSON.stringify(req.body));
+  if (req.body.retrieveCustomer) {
+    var id = req.body.retrieveCustomer.id;
+    res.send(`<customer><id>${id}</id><fullName>Bob Smith</fullName></customer>`);
+  } else {
+    res.status(400).send('Unexpected XML received, missing <retrieveCustomer> tag');
+  }
 });
 
 module.exports = router;

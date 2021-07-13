@@ -7,7 +7,6 @@ var xmlparser = require('express-xml-bodyparser');
 
 var indexRouter = require('./routes/index');
 var xmlTesterRouter = require('./routes/xml-tester');
-var examplesRouter = require('./routes/examples');
 
 var app = express();
 
@@ -26,7 +25,6 @@ app.use(xmlparser({
 
 app.use('/', indexRouter);
 app.use('/xmltester', xmlTesterRouter);
-app.use('/examples', examplesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
