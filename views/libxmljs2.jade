@@ -6,15 +6,15 @@ block content
     a(href="https://www.npmjs.com/package/libxmljs2", target="_blank") #[span(class="code") libxmljs2] 
     package is one of the few packages available to validate XML using XML schemas.
 
-  p XML:
+  p XML to be validated:
   textarea(id="xmlData", cols="100", rows="7")
 
   p
     input(type="checkbox", id="customSchemaCheckbox", name="customSchemaCheckbox" checked) 
-    label(for="customSchemaCheckbox") Validate XML against session-info.xsd schema
+    label(for="customSchemaCheckbox") Validate XML using #[span(class="code") session-info.xsd] schema on the server
 
-  div(id="xmlSchemaContainer", style="display: none")
-    p XML schema: 
+  div(id="xmlSchemaContainer", style="display: none; margin-top: 2em;")
+    p XML schema to validate the XML against:
     textarea(id="xmlSchema", cols="100", rows="14")
 
   p(class="margin-bottom")
@@ -27,7 +27,7 @@ block content
     var sampleXml =
       '<?xml version="1.0"?>\n' +
       '<sessionInfo id="45664434343">\n' +
-      '  <customerId>39399444a</customerId>\n' +
+      '  <customerId>39399444</customerId>\n' +
       '  <customerName>Bob Smith</customerName>\n' +
       '  <token>343ldf0bk343bz43lddd</token>\n' +
       '</sessionInfo>';
