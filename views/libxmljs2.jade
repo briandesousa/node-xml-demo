@@ -1,5 +1,102 @@
 extends layout
 
 block content
-  h1 #[span(class='code') libxmljs2]
-  p 
+  h1 #[span(class="code") libxmljs2]
+  p The 
+    a(href="https://www.npmjs.com/package/libxmljs2", target="_blank") #[span(class="code") libxmljs2] 
+    package is one of the few packages available to validate XML using XML schemas.
+
+  p XML:
+  textarea(id="xmlData", cols="100", rows="7")
+
+  p
+    input(type="checkbox", id="customSchemaCheckbox", name="customSchemaCheckbox" checked) 
+    label(for="customSchemaCheckbox") Validate XML against session-info.xsd schema
+
+  div(id="xmlSchemaContainer", style="display: none")
+    p XML schema: 
+    textarea(id="xmlSchema", cols="100", rows="14")
+
+  p(class="margin-bottom")
+    button(class="large-button", id="validateXmlButton") Validate XML
+
+  p Result: 
+  textarea(id="resultOutput", cols="100", rows="5", readonly)
+
+  script.
+    var sampleXml =
+      '<?xml version="1.0"?>\n' +
+      '<sessionInfo id="45664434343">\n' +
+      '  <customerId>39399444a</customerId>\n' +
+      '  <customerName>Bob Smith</customerName>\n' +
+      '  <token>343ldf0bk343bz43lddd</token>\n' +
+      '</sessionInfo>';
+
+    var xmlDataTextarea = document.getElementById('xmlData');
+    xmlDataTextarea.value = sampleXml;
+    
+    var sampleXsd = 
+      '<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">\n' +
+      '  <xs:element name="sessionInfo">\n' +
+      '    <xs:complexType>\n' +
+      '      <xs:sequence>\n' +
+      '        <xs:element type="xs:int" name="customerId"/>\n' +
+      '        <xs:element type="xs:string" name="customerName"/>\n' +
+      '        <xs:element type="xs:string" name="token"/>\n' +
+      '      </xs:sequence>\n' +
+      '      <xs:attribute type="xs:long" name="id"/>\n' +
+      '    </xs:complexType>\n' +
+      '  </xs:element>\n' +
+      '</xs:schema>\n';
+
+    var xmlSchemaTextarea = document.getElementById('xmlSchema');
+    xmlSchemaTextarea.value = sampleXsd;
+
+    document.getElementById('customSchemaCheckbox')
+      .addEventListener('change', function() {
+        var xmlSchemaContainer = document.getElementById('xmlSchemaContainer');
+        if (this.checked) {
+          xmlSchemaContainer.style.display = 'none';
+        } else {
+          xmlSchemaContainer.style.display = 'block';
+        }
+      }
+    );
+
+    document.getElementById('validateXmlButton')
+      .addEventListener('click', function() {
+        var xmlDataTextarea = document.getElementById('xmlData');
+        var xmlSchemaTextarea = document.getElementById('xmlSchema');
+        var resultOutput = document.getElementById('resultOutput');
+        var customSchemaCheckbox = document.getElementById('customSchemaCheckbox');
+        
+        var xmlData = xmlDataTextarea.value;
+        var xmlSchema = xmlSchemaTextarea.value;
+        
+        if (customSchemaCheckbox.checked) {
+          console.log('validating XML using schema on the server...');
+
+          fetch('/libxmljs2/validateSessionXml', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/xml' },
+            body: xmlData
+          })
+          .then(response => response.text())
+          .then(response => resultOutput.value = response)
+          .catch(error => resultOutput.value = `Error sending fetch request: ${error}`);
+        } else {
+          console.log('validating XML against the schema entered in the textarea...');
+
+          fetch('/libxmljs2/validateSessionXmlWithSchema', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              xmlData: encodeURI(xmlData),
+              xmlSchema: encodeURI(xmlSchema)
+            })
+          })
+          .then(response => response.json())
+          .then(responseJSON => resultOutput.value = JSON.stringify(responseJSON, null, 2))
+          .catch(error => resultOutput.value = `Error sending fetch request: ${error}`);
+        }
+      });

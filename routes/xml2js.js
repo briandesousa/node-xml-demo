@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 
 // xml2js and express-xml-bodyparser example: retrieve customer using XML
-router.post('/customer', function(req, res, next) {
+router.post('/customer', (req, res, next) => {
   console.log('Raw XML: ' + req.rawBody);
   console.log('Parsed XML: ' + JSON.stringify(req.body));
   if (req.body.retrieveCustomer) {
@@ -18,7 +18,7 @@ router.post('/customer', function(req, res, next) {
 });
 
 // XML tester page
-router.get('/xml-tester', function(req, res, next) {
+router.get('/xml-tester', (req, res, next) => {
   res.render('xml-tester', { 
     sampleXmlRequest: 
 `<sessionInfo id="45664434343">
@@ -30,7 +30,7 @@ router.get('/xml-tester', function(req, res, next) {
 });
 
 // XML tester endpoint to send XML messages to
-router.post('/xml-tester', function(req, res, next) {
+router.post('/xml-tester', (req, res, next) => {
   console.log('Request received: ' + JSON.stringify(req.body));
   if (req.body.sessionInfo) {
     var sessionid = req.body.sessionInfo['$'].id;
