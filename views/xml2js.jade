@@ -3,16 +3,14 @@ extends layout
 block content
   h1 #[span(class="code") xml2js] and #[span(class="code") express-xml-bodyparser]
   p The 
-    a(href="https://www.npmjs.com/package/xml2js", target="_blank")
-      #[span(class="code") xml2js] 
-    package is a popular solution for reading and writing XML in Node.js. It is used by the 
-    a(href="https://www.npmjs.com/package/express-xml-bodyparser", target="_blank")
-      #[span(class="code") express-xml-bodyparser] 
-    package to parse incoming XML requests.
+    a(href="https://www.npmjs.com/package/xml2js", target="_blank") #[span(class="code") xml2js]
+    |  package is a popular solution for reading and writing XML in Node.js. It is used by the 
+    a(href="https://www.npmjs.com/package/express-xml-bodyparser", target="_blank") #[span(class="code") express-xml-bodyparser]
+    |  package to parse incoming XML requests.
 
   p Use the button below to send an HTTP POST request with an XML body to an endpoint hosted on the backend Express
-    server. The backend is using #[span(class="code") express-xml-bodyparser] and #[span(class="code") xmljs] to parse
-    the request and return an XML response.
+    |  server. The backend is using #[span(class="code") express-xml-bodyparser] and #[span(class="code") xmljs] to
+    |  parse the request and return an XML response.
 
   div(class="margin-bottom")
     button(class="large-button", id="sendXmlButton") Send XML Request
@@ -36,5 +34,5 @@ block content
       })
       .then(response => response.text())
       .then(responseText => responseOutput.value = responseText)
-      .catch(error => responseOutput.value = `Error sending fetch request: ${error}`);
+      .catch(error => responseOutput.value = `Error caught: ${error}`);
     });

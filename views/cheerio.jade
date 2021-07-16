@@ -2,4 +2,71 @@ extends layout
 
 block content
   h1 #[span(class='code') cheerio]
-  p 
+  p The 
+    a(href="https://www.npmjs.com/package/cheerio", target="_blank") #[span(class="code") cheerio] 
+    |  package simplifies parsing and manipulating HTML content.
+
+  p Define an HTML table with some cells that contain numeric values:
+  textarea(id="htmlData", cols="100", rows="18")
+
+  p Click the button below to manipulate the HTML to highlight table cells based on their numeric value.
+
+  p(class="margin-bottom")
+    button(class="large-button", id="manipulateHtmlButton") Manipulate HTML
+
+  p Updated HTML:
+  textarea(id="resultHtml", cols="100", rows="18", readonly)
+
+  p Updated HTML rendered: 
+  div(id="resultHtmlRenderContainer")
+
+  script.
+    var sampleHtml = 
+      '<table border="1" cellpadding="5px" cellspacing="0">\n' +
+      '  <tr>\n' +
+      '    <td>Sammy Steakhouse Inc.</td>\n' +
+      '    <td>-130.33</td>\n' +
+      '  </tr>\n' +
+      '  <tr>\n' +
+      '    <td>ATM deposit</td>\n' +
+      '    <td>500.00</td>\n' +
+      '  </tr>\n' +
+      '  <tr>\n' +
+      '    <td>Coffee Emporium</td>\n' +
+      '    <td>-15.89</td>\n' +
+      '  </tr>\n' +
+      '  <tr>\n' +
+      '    <td>Government cheque deposit</td>\n' +
+      '    <td>150.00</td>\n' +
+      '  </tr>\n' +
+      '</table>';
+
+    var htmlData = document.getElementById('htmlData');
+    htmlData.value = sampleHtml;
+
+    document.getElementById('manipulateHtmlButton')
+      .addEventListener('click', function() {
+        var htmlData = document.getElementById('htmlData');
+        var resultHtml = document.getElementById('resultHtml');
+        var resultHtmlRenderContainer = document.getElementById('resultHtmlRenderContainer');
+
+        fetch('/cheerio/highlightTable', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            encodedHtml: encodeURI(htmlData.value)
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+          if (response.error) {
+            resultHtml.value = response.error;
+          } else {
+            decodedHtml = decodeURI(response.encodedHtml);
+            resultHtml.value = decodedHtml;
+            resultHtmlRenderContainer.innerHTML = decodedHtml;
+            console.log(`Received HTML: \n${decodedHtml}`);
+          }
+        })
+        .catch(error => resultHtml.value = `Error caught: ${error}`); 
+      });

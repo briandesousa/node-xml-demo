@@ -37,6 +37,6 @@ block content
         return response.text();
       })
       .then(responseText => responseOutput.value = responseText)
-      .catch(error => responseOutput.value = `Error sending fetch request: ${error}`);
+      .catch(error => responseOutput.value = `Error caught: ${error}`);
     });
 

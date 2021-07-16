@@ -4,11 +4,11 @@ var libxmljs = require('libxmljs2');
 var fs = require('fs');
 var path = require('path');
 
-router.get('/', function(req, res, next) {
+router.get('/libxmljs2', function(req, res, next) {
   res.render('libxmljs2', {});
 });
 
-router.post('/validateSessionXmlWithSchema', (req, res, next) => {
+router.post('/libxmljs2/validateSessionXmlWithSchema', (req, res, next) => {
   var xmlData = decodeURI(req.body.xmlData);
   var xmlSchema = decodeURI(req.body.xmlSchema);
   var xmlDoc = libxmljs.parseXml(xmlData);
@@ -29,7 +29,7 @@ function loadXmlSchema(filename) {
   return libxmljs.parseXml(schema); 
 }
 
-router.post('/validateSessionXml', (req, res, next) => {
+router.post('/libxmljs2/validateSessionXml', (req, res, next) => {
   var xmlData = req.rawBody;
 
   // parse incoming XML data

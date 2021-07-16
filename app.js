@@ -27,10 +27,10 @@ app.use(xmlparser({
 }));
 
 app.use('/', indexRouter);
-app.use('/xml2js', xml2jsRouter);
-app.use('/libxmljs2', libxmljs2Router);
-app.use('/cheerio', cheerioRouter);
-app.use('/svgson', svgsonRouter);
+app.use('/', xml2jsRouter);
+app.use('/', libxmljs2Router);
+app.use('/', cheerioRouter);
+app.use('/', svgsonRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

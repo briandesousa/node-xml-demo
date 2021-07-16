@@ -3,8 +3,8 @@ extends layout
 block content
   h1 #[span(class="code") libxmljs2]
   p The 
-    a(href="https://www.npmjs.com/package/libxmljs2", target="_blank") #[span(class="code") libxmljs2] 
-    package is one of the few packages available to validate XML using XML schemas.
+    a(href="https://www.npmjs.com/package/libxmljs2", target="_blank") #[span(class="code") libxmljs2]
+    |  package is one of the few packages available to validate XML using XML schemas.
 
   p XML to be validated:
   textarea(id="xmlData", cols="100", rows="7")
@@ -83,7 +83,7 @@ block content
           })
           .then(response => response.text())
           .then(response => resultOutput.value = response)
-          .catch(error => resultOutput.value = `Error sending fetch request: ${error}`);
+          .catch(error => resultOutput.value = `Error caught: ${error}`);
         } else {
           console.log('validating XML against the schema entered in the textarea...');
 
@@ -97,6 +97,6 @@ block content
           })
           .then(response => response.json())
           .then(responseJSON => resultOutput.value = JSON.stringify(responseJSON, null, 2))
-          .catch(error => resultOutput.value = `Error sending fetch request: ${error}`);
+          .catch(error => resultOutput.value = `Error caught: ${error}`);
         }
       });
