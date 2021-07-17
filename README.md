@@ -1,6 +1,6 @@
 # Reading and Writing XML in Node - Demo App
 
-A simple app that demonstrates a few common packagest that help with reading and writing XML in Node.js applications.
+A simple Node.js Express web app that demonstrates some common packages that help with reading and writing XML in Node.js applications.
 
 ## xml2js and express-xml-bodyparser
 ![xml2js and express-xml-bodyparser demo](screenshots/xml2js.png)
