@@ -1,5 +1,106 @@
 extends layout
 
 block content
+  style(type="text/css").
+    .image-box-container {
+      display: flex;
+    }
+    .image-box {
+      width: 200px;
+      height: 200px;
+      padding: 1em;
+      border: 1px solid black;
+      margin-right: 20px;
+      text-align: center;
+      float: left;
+      font-weight: bold;
+    }
+
   h1 #[span(class='code') svgson]
+  div(class="image-box-container")
+    div(class="image-box")
+      div Original SVG Image
+      image(id="svgImage", src="images/paint.svg")
+    div(class="image-box")
+      div Updated SVG Image
+      div(id="svgImageContainer")
+
+  div(style="margin-bottom: 2em")
+    p SVG image manipulation options: 
+    div
+      input(type="radio", id="updateImageColors", name="imageUpdateOptions", checked)
+      label(for="updateImageColors") Provide Hex color codes to update the SVG image
+    div
+      input(type="radio", id="updateSVGXML", name="imageUpdateOptions")
+      label(for="updateSVGXML") Manipulate the SVG image's XML directly
+
+  div(id="updateImageColorsPanel")
+    p 
+      label(for="color1") Color 1: 
+      input(id="color1", value="#FF0000")
+    p
+      label(for="color2") Color 2: 
+      input(id="color2", value="#00FF00")
+    p
+      label(for="color3") Color 3: 
+      input(id="color3", value="#0000FF")
+
+  div(id="updateSVGXMLPanel", style="display: none")
+    textarea(id="svgXmlTextarea", cols="100", rows="20")
+
   p 
+    button(class="large-button", id="updateSVGImage") Update SVG Image
+  
+  script.
+    // load SVG XML into text area on page load
+    fetch('images/paint.svg')
+      .then(image => image.text())
+      .then(imageXml => document.getElementById('svgXmlTextarea').value = imageXml);
+
+    // toggle panel visibility based on selected image manipulation option
+    function togglePanels() {
+      var isUpdateImageColors = document.getElementById('updateImageColors').checked;
+      document.getElementById('updateImageColorsPanel').style.display = isUpdateImageColors ? 'block' : 'none';
+
+      var isUpdateSVGXML = document.getElementById('updateSVGXML').checked;
+      document.getElementById('updateSVGXMLPanel').style.display = isUpdateSVGXML ? 'block' : 'none';
+    }
+
+    document.getElementById('updateImageColors').addEventListener('click', togglePanels);
+    
+    document.getElementById('updateSVGXML').addEventListener('click', togglePanels);
+
+    // render the updated SVG image based on the selected image manipulation option
+    document.getElementById('updateSVGImage')
+      .addEventListener('click', function() {
+        var isUpdateImageColors = document.getElementById('updateImageColors').checked;
+        var isUpdateSVGXML = document.getElementById('updateSVGXML').checked;
+
+        if (isUpdateImageColors) {
+          var color1 = document.getElementById('color1').value;
+          var color2 = document.getElementById('color2').value;
+          var color3 = document.getElementById('color3').value;
+
+          fetch('/svgson/updateSVGImageColors', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              color1: color1,
+              color2: color2,
+              color3: color3
+            })
+          })
+          .then(response => response.text())
+          .then(svgImageXml => {
+            document.getElementById('svgImageContainer').innerHTML = svgImageXml;
+          })
+          .catch(error => document.getElementById('svgImageContainer').innerHTML = 'Error caught: ' + error);
+        } else if (isUpdateSVGXML) {
+          var svgXmlTextarea = document.getElementById('svgXmlTextarea');
+          var svgImageContainer = document.getElementById('svgImageContainer');
+          svgImageContainer.innerHTML = svgXmlTextarea.value;
+        }
+
+      
+    });
+      
