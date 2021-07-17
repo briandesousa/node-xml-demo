@@ -1,0 +1,42 @@
+block variables
+    - var nav = 'home'
+
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    nav 
+      ul
+        if nav === 'home'
+          li(class="active") #[a(href="/") Home] 
+        else 
+          li #[a(href="/") Home] 
+
+        if nav === 'xml2js'
+          li(class="active") #[a(href="/xml2js") xml2js]
+        else 
+          li #[a(href="/xml2js") xml2js]
+        
+        if nav === 'libxmljs2'
+          li(class="active") #[a(href="/libxmljs2") libxmljs2]
+        else 
+          li #[a(href="/libxmljs2") libxmljs2]
+
+        if nav === 'cheerio'
+          li(class="active") #[a(href="/cheerio") cheerio]
+        else 
+          li #[a(href="/cheerio") cheerio]
+          
+        if nav === 'svgson'
+          li(class="active") #[a(href="/svgson") svgson]
+        else 
+          li #[a(href="/svgson") svgson]
+
+    header
+      h1 Reading and Writing XML with Node.js
+    main
+      block content
+    
