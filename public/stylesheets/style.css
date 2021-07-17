@@ -35,7 +35,16 @@ nav ul {
 }
 nav li {
   display: inline-block;
-  padding: 0.5em 0em 0.5em 1em;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav .active {
+  border-bottom: 5px solid #3f62ac;
+  box-sizing: border-box;
 }
 
 header {

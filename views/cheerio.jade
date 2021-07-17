@@ -1,15 +1,18 @@
 extends layout
 
+block vars
+  - var nav = 'cheerio'
+
 block content
   h1 #[span(class='code') cheerio]
   p The 
-    a(href="https://www.npmjs.com/package/cheerio", target="_blank") #[span(class="code") cheerio] 
+    a(href="https://www.npmjs.com/package/cheerio", target="_blank") #[span(class="code") cheerio]
     |  package simplifies parsing and manipulating HTML content.
 
   p Define an HTML table with some cells that contain numeric values:
   textarea(id="htmlData", cols="100", rows="18")
 
-  p Click the button below to manipulate the HTML to highlight table cells based on their numeric value.
+  p Click the button below to manipulate the HTML table to highlight cells based on their numeric value.
 
   p(class="margin-bottom")
     button(class="large-button", id="manipulateHtmlButton") Manipulate HTML

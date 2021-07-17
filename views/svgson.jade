@@ -1,5 +1,8 @@
 extends layout
 
+block vars
+  - var nav = 'svgson'
+
 block content
   style(type="text/css").
     .image-box-container {
@@ -17,6 +20,10 @@ block content
     }
 
   h1 #[span(class='code') svgson]
+  p The 
+    a(href="https://www.npmjs.com/package/svgson", target="_blank") #[span(class="code") svgson]
+    |  package can convert an SVG image into a JSON object to make it easier to manipulate SVG images in JavaScript.
+
   div(class="image-box-container")
     div(class="image-box")
       div Original SVG Image
